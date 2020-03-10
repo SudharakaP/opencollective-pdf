@@ -9,13 +9,25 @@ const nextConfig = {
     LOG_LEVEL: process.env.LOG_LEVEL,
   },
   webpack: config => {
+    // Inline images
     config.module.rules.push({
       test: /public\/.*\.(jpg|gif|png|svg|)$/,
       use: {
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 750000, // 1mo
           fallback: 'file-loader',
+        },
+      },
+    });
+
+    // Inline fonts
+    config.module.rules.push({
+      test: /\.(ttf|eot|svg|woff|woff2)$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 750000, // 1mo
         },
       },
     });
